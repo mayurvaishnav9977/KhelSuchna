@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@import "react-datepicker/dist/react-datepicker.css"; 
+@import 'swiper/css';
+@import 'swiper/css/autoplay';
+:root {
+  --background: #121111;
+  --foreground: #f9f3f3;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f0f0f;
+    --foreground: #ededed;
+  }
+}
+
+
+  body, html {
+  background-color: white; /* white background */
+  color: black;            /* black text */
+  margin: 0;               /* remove default spacing */
+  padding: 0;
+  
+  min-height: 100vh;       /* ensures full-page height */
+
+  
+  font-family: Arial, Helvetica, sans-serif;
+}
