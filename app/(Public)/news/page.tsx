@@ -6,7 +6,7 @@ import NotFoundUI from "@/Components/NotFoundUI";
 // Mock data (replace with API fetch)
 const mockNews: News[] = [
   {
-    id: "1",
+    id: 1,
     title: "Local Sports Event Ends in Surprise Victory",
     summary: "An underdog team stunned fans with a last-minute goal.",
     imageUrl: "https://picsum.photos/seed/sports/400/250",
@@ -14,7 +14,7 @@ const mockNews: News[] = [
     source: "Sports Daily",
   },
   {
-    id: "2",
+    id: 2,
     title: "AI Tech Conference 2026 Announced",
     summary: "Experts will discuss breakthroughs in artificial intelligence.",
     imageUrl: "https://picsum.photos/seed/tech/400/250",
@@ -22,7 +22,7 @@ const mockNews: News[] = [
     source: "Tech Times",
   },
   {
-    id: "3",
+    id: 3,
     title: "Stock Markets Hit Record High",
     summary: "Global markets surged amid positive economic signals.",
     imageUrl: "https://picsum.photos/seed/finance/400/250",
@@ -30,7 +30,7 @@ const mockNews: News[] = [
     source: "Finance World",
   },
   {
-    id: "4",
+    id: 4,
     title: "New Movie Breaks Box Office Records",
     summary: "The latest blockbuster has become the highest-grossing film this year.",
     imageUrl: "https://picsum.photos/seed/movie/400/250",
@@ -38,7 +38,7 @@ const mockNews: News[] = [
     source: "Entertainment Hub",
   },
   {
-    id: "5",
+    id: 5,
     title: "Health Experts Warn of Seasonal Flu Rise",
     summary: "Doctors advise precautions as flu cases increase.",
     imageUrl: "https://picsum.photos/seed/health/400/250",
@@ -46,7 +46,7 @@ const mockNews: News[] = [
     source: "Health News",
   },
   {
-    id: "6",
+    id: 6,
     title: "Startup Ecosystem Booms in India",
     summary: "New startups are attracting record investments this quarter.",
     imageUrl: "https://picsum.photos/seed/startup/400/250",
@@ -54,7 +54,7 @@ const mockNews: News[] = [
     source: "Business Insider",
   },
   {
-    id: "7",
+    id: 7,
     title: "Climate Change Summit 2026 Highlights",
     summary: "World leaders discuss urgent environmental policies.",
     imageUrl: "https://picsum.photos/seed/climate/400/250",
@@ -62,7 +62,7 @@ const mockNews: News[] = [
     source: "Global News",
   },
   {
-    id: "8",
+    id: 8,
     title: "New Smartphone Launch Shocks Industry",
     summary: "A flagship device introduces groundbreaking features.",
     imageUrl: "https://picsum.photos/seed/mobile/400/250",
