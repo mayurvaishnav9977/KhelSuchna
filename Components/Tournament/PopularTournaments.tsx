@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import Link from "next/link";
@@ -13,14 +12,16 @@ type Props = {
 };
 
 export default function PopularTournaments({ tournaments }: Props) {
-  // ✅ No artificial mounted delay — just check if data exists
   const hasData = tournaments && tournaments.length > 0;
 
   return (
     <Swiper
       modules={[Autoplay]}
-      autoplay={false} // ✅ autoplay disabled
-      loop={hasData && tournaments.length > 3} // ✅ loop only if enough slides
+      autoplay={{
+        delay: 2500, // 2.5 seconds between slides
+        disableOnInteraction: false, // continue autoplay after user swipe
+      }}
+      loop={hasData && tournaments.length > 1} // loop only if more than 1 slide
       speed={600}
       spaceBetween={24}
       breakpoints={{
@@ -28,6 +29,7 @@ export default function PopularTournaments({ tournaments }: Props) {
         640: { slidesPerView: 2.5 },
         1024: { slidesPerView: 3 },
       }}
+      onSwiper={(swiper) => swiper.autoplay?.start()} // TypeScript-safe autoplay start
     >
       {hasData
         ? tournaments.map((t) => (
@@ -35,7 +37,7 @@ export default function PopularTournaments({ tournaments }: Props) {
               <Link href={`/tournaments/${t.slug}`} passHref>
                 <div
                   className="bg-white rounded-lg shadow overflow-hidden 
-                             w-full min-h-[260px] sm:min-h-[320px] lg:min-h-[400px] 
+                             w-full min-h-65 sm:min-h-80 lg:min-h-100 
                              cursor-pointer hover:shadow-lg transition"
                 >
                   <img
@@ -58,7 +60,7 @@ export default function PopularTournaments({ tournaments }: Props) {
               </Link>
             </SwiperSlide>
           ))
-        : // ✅ Show skeletons if no data yet
+        : // Show skeletons while loading
           Array(3)
             .fill(null)
             .map((_, i) => (

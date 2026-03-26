@@ -11,7 +11,7 @@ export default function Navbar() {
   const hideLinks = ["/login"].includes(pathname);
 
   return (
-    <nav className="bg-sky-700 text-white p-4 flex justify-between items-center">
+<nav className="bg-linear-to-r from-sky-500 to-sky-700 text-white p-4 flex justify-between items-center">
       <Link href="/" className="font-bold text-lg">
   Khel Suchna
 </Link>

@@ -5,23 +5,40 @@ import Link from "next/link";
 import NewsCard from "./NewsCard";
 import { News } from "@/Modals/allmodals";
 
-export default function NewsSearchBar({ news }: { news: News[] }) {
+type Props = {
+  news?: News[]; // allow optional, default to empty array
+};
+
+export default function NewsSearchBar({ news = [] }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [filteredNews, setFilteredNews] = useState<News[]>(news);
 
-  // Simulate loading when searchTerm changes
   useEffect(() => {
-    setLoading(true);
+    // Use current news array safely
+    const currentNews = news || [];
+
+    // Clear previous timeout if typing continues
     const timer = setTimeout(() => {
-      const results = news.filter(
+      if (!searchTerm) {
+        setFilteredNews(currentNews);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+
+      // Filter news by title or source
+      const results = currentNews.filter(
         (item) =>
           item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.source.toLowerCase().includes(searchTerm.toLowerCase())
       );
+
       setFilteredNews(results);
       setLoading(false);
-    }, 400); // small delay for skeleton effect
+    }, 400); // debounce 400ms
+
     return () => clearTimeout(timer);
   }, [searchTerm, news]);
 
@@ -60,7 +77,7 @@ export default function NewsSearchBar({ news }: { news: News[] }) {
         </div>
       ) : (
         <div className="text-center text-gray-500 mt-10">
-          No news found for <span className="font-semibold">"{searchTerm}"</span>.
+          No news found for <span className="font-semibold">&quot;{searchTerm}&quot;</span>.
         </div>
       )}
     </>

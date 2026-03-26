@@ -2,6 +2,8 @@ import Navbar from "@/Components/Navbar/Navbar";
 import BottomNavbar from "@/Components/Navbar/BottomNavbar";
 import "react-datepicker/dist/react-datepicker.css";
 import EmotionProvider from "@/lib/emotion-provider";
+import Footer from "@/Components/Footer/footer"; // <-- import footer
+
 
 export default function PublicLayout({
   children,
@@ -18,7 +20,7 @@ export default function PublicLayout({
 
       {/* Main content */}
       <main className="pb-16">{children}</main>
-
+<Footer/>
       {/* Mobile bottom navbar */}
       <div className="md:hidden fixed bottom-0 w-full">
         <BottomNavbar />

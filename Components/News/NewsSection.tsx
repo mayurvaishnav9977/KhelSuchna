@@ -1,13 +1,13 @@
 "use client";
 
 import HomeNewsCard from "@/Components/News/HomeNewsCard";
-import { newsData } from "@/lib/news";
+import { mockNews } from "@/lib/news";
 
 export default function HomeNewsSection() {
   // Limit hero stories to only 2
-  const heroStories = newsData.filter(n => n.variant === "hero").slice(0, 2);
-  const sideStories = newsData.filter(n => n.variant === "side");
-  const headlines = newsData.filter(n => n.variant === "list");
+  const heroStories = mockNews.filter(n => n.variant === "hero").slice(0, 2);
+  const sideStories = mockNews.filter(n => n.variant === "side").slice(0,3);
+  const headlines = mockNews.filter(n => n.variant === "list");
 
   return (
     <section className="space-y-10">

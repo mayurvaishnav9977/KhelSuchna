@@ -1,8 +1,9 @@
-import TournamentCard from "@/Components/Tournament/TournamentCard";
 import { tournaments } from "@/lib/tournaments";
 import PopularTournaments from "@/Components/Tournament/PopularTournaments";
 import AllTournaments from "@/Components/Tournament/AllTournaments";
 import HomeNewsSection from "@/Components/News/NewsSection";
+import NewsByCategory from "@/Components/News/NewsByCategory";
+import { mockNews } from "@/lib/news";
 
 export default function DashboardPage() {
   return (
@@ -28,6 +29,9 @@ export default function DashboardPage() {
         <section>
            <HomeNewsSection />
         </section>
+        <main className="space-y-16 p-4 md:p-8">
+      <NewsByCategory news={mockNews} />
+    </main>
       </div>
     </div>
   );

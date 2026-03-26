@@ -6,11 +6,13 @@ export interface News {
   imageUrl: string;
   publishedAt: string; // keep this
   source: string;
+    category: "cricket" | "football" | "chess" | "vollyball" |"tennis"|"badminton" |"hockey " ; // <-- added category
+
    variant?: "hero" | "side" | "list";
 }
 
 export interface NewsArticle {
-  id: string;
+  id: number;
   title: string;
   author: string;
   publishedAt: string;
