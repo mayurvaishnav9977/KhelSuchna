@@ -1,6 +1,7 @@
 import TournamentSearch from "@/Components/Tournament/TournamentSearch";
 import { tournaments } from "@/lib/tournaments";
 import NotFoundUI from "@/Components/NotFoundUI";
+import TabSwitch from "@/Components/TabSwitch/TabSwitch";
 
 export default function TournamentsPage() {
   const hasTournaments = tournaments && tournaments.length > 0;
@@ -11,7 +12,13 @@ export default function TournamentsPage() {
         <h2 className="text-center text-3xl font-bold mb-10">Tournaments</h2>
 
         {hasTournaments ? (
+          <>
+          
+            
+          
           <TournamentSearch tournaments={tournaments} />
+          <TabSwitch tournaments={tournaments}/>
+            </>
         ) : (
           <NotFoundUI
             title="No Tournaments Available"

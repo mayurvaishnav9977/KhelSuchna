@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import { Tournament } from "@/Modals/allmodals";
@@ -11,21 +12,41 @@ interface TabPanelProps {
 }
 
 function TabPanel({ children, value, index }: TabPanelProps) {
-  return <div role="tabpanel" hidden={value !== index}>{value === index && <Box sx={{ p: 2 }}>{children}</Box>}</div>;
+  return (
+    <div role="tabpanel" hidden={value !== index}>
+      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
+    </div>
+  );
 }
 
 interface TabSwitchProps {
-  tournaments: Tournament[];
+  tournaments: Tournament[]; // ← must include this
+  currentTab?: "upcoming" | "ongoing" | "completed";
+  onTabChange?: (tab: "upcoming" | "ongoing" | "completed") => void;
 }
 
-export default function TabSwitch({ tournaments }: TabSwitchProps) {
-  const [value, setValue] = React.useState(0);
+export default function TabSwitch({
+  tournaments,
+  currentTab,
+  onTabChange,
+}: TabSwitchProps) {
+  const tabIndex = {
+    upcoming: 0,
+    ongoing: 1,
+    completed: 2,
+  };
+
+  const indexTab = ["upcoming", "ongoing", "completed"] as const;
+
+  const [value, setValue] = React.useState<number>(
+    currentTab ? tabIndex[currentTab] : 0
+  );
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    if (onTabChange) onTabChange(indexTab[newValue]);
   };
 
-  // Filter tournaments by status
   const upcoming = tournaments.filter((t) => t.status === "upcoming");
   const ongoing = tournaments.filter((t) => t.status === "ongoing");
   const completed = tournaments.filter((t) => t.status === "completed");
