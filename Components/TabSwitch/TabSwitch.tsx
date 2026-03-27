@@ -1,6 +1,8 @@
-"use client"; 
+"use client";
 import React from "react";
-import { Tabs, Tab, Box, Typography } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
+import { Tournament } from "@/Modals/allmodals";
+import TournamentCard from "@/Components/Tournament/TournamentCard";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -9,42 +11,58 @@ interface TabPanelProps {
 }
 
 function TabPanel({ children, value, index }: TabPanelProps) {
-  return (
-    <div role="tabpanel" hidden={value !== index}>
-      {value === index && (
-        <Box sx={{ p: 2 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
+  return <div role="tabpanel" hidden={value !== index}>{value === index && <Box sx={{ p: 2 }}>{children}</Box>}</div>;
 }
 
-export default function TabSwitch() {
+interface TabSwitchProps {
+  tournaments: Tournament[];
+}
+
+export default function TabSwitch({ tournaments }: TabSwitchProps) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
+  // Filter tournaments by status
+  const upcoming = tournaments.filter((t) => t.status === "upcoming");
+  const ongoing = tournaments.filter((t) => t.status === "ongoing");
+  const completed = tournaments.filter((t) => t.status === "completed");
+
+  const renderTournaments = (list: Tournament[]) => {
+    if (!list.length) return <Box>No tournaments available.</Box>;
+    return (
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" },
+          gap: 3,
+        }}
+      >
+        {list.map((t) => (
+          <TournamentCard key={t.slug} tournament={t} />
+        ))}
+      </Box>
+    );
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
-      {/* Tab Headers */}
-      <Tabs value={value} onChange={handleChange} aria-label="basic tabs" centered>
-        <Tab label="Tab One" />
-        <Tab label="Tab Two" />
-        <Tab label="Tab Three" />
+      <Tabs value={value} onChange={handleChange} aria-label="tournament tabs" centered>
+        <Tab label="Upcoming" />
+        <Tab label="Ongoing" />
+        <Tab label="Completed" />
       </Tabs>
 
-      {/* Tab Panels */}
       <TabPanel value={value} index={0}>
-        Content for Tab One
+        {renderTournaments(upcoming)}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Content for Tab Two
+        {renderTournaments(ongoing)}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Content for Tab Three
+        {renderTournaments(completed)}
       </TabPanel>
     </Box>
   );
