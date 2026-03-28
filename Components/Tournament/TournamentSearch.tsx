@@ -1,28 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
-import SearchWrapper from "@/Components/Searchwrapper/searchwrapper";
-import TournamentCard from "@/Components/Tournament/TournamentCard";
-import { Tournament } from "@/Modals/allmodals";
+import React, { Dispatch, SetStateAction } from "react";
+import { TextField, InputAdornment, IconButton } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 
-interface Props {
-  tournaments: Tournament[];
+interface TournamentSearchProps {
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
 }
 
-export default function TournamentSearch({ tournaments }: Props) {
-  const [query, setQuery] = useState(""); // track the search input
-
+export default function TournamentSearch({ query, setQuery }: TournamentSearchProps) {
   return (
-    <SearchWrapper<Tournament>
-      items={tournaments}
-      filterFn={(item, q) =>
-        item.name.toLowerCase().includes(q.toLowerCase()) ||
-        item.location.toLowerCase().includes(q.toLowerCase())
-      }
-      renderCard={(item) => <TournamentCard tournament={item} />}
+    <TextField
+      fullWidth
+      variant="outlined"
       placeholder="Search tournaments..."
-      query={query}         // pass current search query
-      setQuery={setQuery}   // pass state setter to update query
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      sx={{ mb: 3 }}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon color="action" />
+          </InputAdornment>
+        ),
+        endAdornment: query ? (
+          <InputAdornment position="end">
+            <IconButton onClick={() => setQuery("")} size="small">
+              <CloseIcon />
+            </IconButton>
+          </InputAdornment>
+        ) : null,
+      }}
     />
   );
 }

@@ -4,19 +4,12 @@ import BottomNavbar from "@/Components/Navbar/BottomNavbar";
 import Footer from "@/Components/Footer/footer";
 import "react-datepicker/dist/react-datepicker.css";
 import EmotionProvider from "@/lib/emotion-provider";
-import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 
-const theme = createTheme({
-  palette: {
-    mode: "light",
-  },
-});
+
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <EmotionProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline /> {/* MUI default styles */}
         
         {/* Desktop navbar */}
         <Navbar />
@@ -31,7 +24,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         <div className="md:hidden fixed bottom-0 w-full">
           <BottomNavbar />
         </div>
-      </ThemeProvider>
     </EmotionProvider>
   );
 }
