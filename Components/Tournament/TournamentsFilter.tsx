@@ -1,51 +1,94 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useState } from "react";
+import { Tabs, Tab, Box, Typography } from "@mui/material";
 import { Tournament } from "@/Modals/allmodals";
-import TabSwitch from "@/Components/TabSwitch/TabSwitch";
-import SearchWrapper from "@/Components/Searchwrapper/searchwrapper";
 import TournamentCard from "@/Components/Tournament/TournamentCard";
-import { Box } from "@mui/material";
+import SearchWrapper from "@/Components/Searchwrapper/searchwrapper";
 
-interface Props {
+interface TabSwitchProps {
   tournaments: Tournament[];
+  currentTab: "upcoming" | "ongoing" | "completed";
+  onTabChange: (tab: "upcoming" | "ongoing" | "completed") => void;
 }
 
-export default function TournamentsFilter({ tournaments }: Props) {
-  const [currentTab, setCurrentTab] = useState<"upcoming" | "ongoing" | "completed">("upcoming");
-  const [searchQuery, setSearchQuery] = useState("");
+export default function TabSwitch({
+  tournaments,
+  currentTab,
+  onTabChange,
+}: TabSwitchProps) {
+  const [query, setQuery] = useState("");
 
-  // Filter tournaments based on current tab and search query
-  const filteredTournaments = useMemo(() => {
-    return tournaments.filter(
+  const tabs: ("upcoming" | "ongoing" | "completed")[] = [
+    "upcoming",
+    "ongoing",
+    "completed",
+  ];
+  const value = tabs.indexOf(currentTab);
+
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+    onTabChange(tabs[newValue]);
+    setQuery(""); // reset search when switching tabs
+  };
+
+  const filterByTab = useMemo(() => {
+    return tournaments.filter((t) => t.status === currentTab);
+  }, [currentTab, tournaments]);
+
+  const filtered = useMemo(() => {
+    if (!query) return filterByTab;
+    return filterByTab.filter(
       (t) =>
-        t.status === currentTab &&
-        (t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         t.location.toLowerCase().includes(searchQuery.toLowerCase()))
+        t.name.toLowerCase().includes(query.toLowerCase()) ||
+        t.location.toLowerCase().includes(query.toLowerCase())
     );
-  }, [currentTab, searchQuery, tournaments]);
+  }, [filterByTab, query]);
 
   return (
-    <Box>
-      {/* Tabs */}
-      <TabSwitch
-        tournaments={tournaments} // ✅ MUST pass tournaments here
-        currentTab={currentTab}
-        onTabChange={(tab) => setCurrentTab(tab)}
-      />
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
+      {/* Tabs + Search */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mb: 2,
+        }}
+      >
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label="Upcoming" />
+          <Tab label="Ongoing" />
+          <Tab label="Completed" />
+        </Tabs>
 
-      {/* Search */}
-      <SearchWrapper
-  items={filteredTournaments}
-  filterFn={(item, q) =>
-    item.name.toLowerCase().includes(q.toLowerCase()) ||
-    item.location.toLowerCase().includes(q.toLowerCase())
-  }
-  renderCard={(item) => <TournamentCard tournament={item} />}
-  placeholder="Search tournaments..."
-  query={searchQuery}           // ✅ pass current query
-  setQuery={setSearchQuery}     // ✅ pass state updater
-/>
+        <Box sx={{ width: "350px" }}>
+          <SearchWrapper
+            placeholder="Search tournaments..."
+            query={query}
+            setQuery={setQuery}
+          />
+        </Box>
+      </Box>
+
+      {/* Cards */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" },
+          gap: { xs: 2, sm: 3 },
+          mt: 2,
+        }}
+      >
+        {filtered.length > 0 ? (
+          filtered.map((t) => (
+            <TournamentCard key={t.slug} tournament={t} />
+          ))
+        ) : (
+          <Typography>No {currentTab} tournaments found.</Typography>
+        )}
+      </Box>
     </Box>
   );
 }
+  

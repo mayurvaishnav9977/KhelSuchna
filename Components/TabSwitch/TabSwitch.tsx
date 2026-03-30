@@ -19,6 +19,7 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
     setQuery(""); // reset search when switching tabs
   };
 
+  // Filter tournaments by tab
   const filterByTab = useMemo(() => {
     switch (value) {
       case 1:
@@ -32,6 +33,7 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
     }
   }, [value, tournaments]);
 
+  // Apply search query
   const filtered = useMemo(() => {
     if (!query) return filterByTab;
     return filterByTab.filter(
@@ -48,7 +50,7 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
       {/* Mobile header: Title + Search inline */}
       <Box
         sx={{
-          display: { xs: "flex", md: "none" }, // visible until 767px
+          display: { xs: "flex", md: "none" },
           alignItems: "center",
           justifyContent: "space-between",
           gap: 1.5,
@@ -59,12 +61,11 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
           Tournaments
         </Typography>
 
-        {/* Responsive search box for mobile */}
         <Box
           sx={{
-            flex: 1,             // take remaining space
-            maxWidth: "65%",     // prevent it from being too wide
-            minWidth: "120px",   // keep usable size on very small screens
+            flex: 1,
+            maxWidth: "65%",
+            minWidth: "120px",
           }}
         >
           <SearchWrapper
@@ -78,7 +79,7 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
       {/* Desktop header: Tabs + Search */}
       <Box
         sx={{
-          display: { xs: "none", md: "flex" }, // visible from 768px
+          display: { xs: "none", md: "flex" },
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
