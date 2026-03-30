@@ -19,7 +19,6 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
     setQuery(""); // reset search when switching tabs
   };
 
-  // filter by tab
   const filterByTab = useMemo(() => {
     switch (value) {
       case 1:
@@ -33,7 +32,6 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
     }
   }, [value, tournaments]);
 
-  // filter by search
   const filtered = useMemo(() => {
     if (!query) return filterByTab;
     return filterByTab.filter(
@@ -47,60 +45,82 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
 
   return (
     <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
-      {/* Tabs + Search */}
+      {/* Mobile header: Title + Search inline */}
       <Box
         sx={{
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          alignItems: { xs: "stretch", sm: "center" },
-          justifyContent: { sm: "space-between" },
+          display: { xs: "flex", md: "none" }, // visible until 767px
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 1.5,
+          mb: 2,
         }}
       >
+        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          Tournaments
+        </Typography>
+
+        {/* Responsive search box for mobile */}
         <Box
           sx={{
-            order: { xs: 1, sm: 2 },
-            width: { xs: "100%", sm: "250px" },
+            flex: 1,             // take remaining space
+            maxWidth: "65%",     // prevent it from being too wide
+            minWidth: "120px",   // keep usable size on very small screens
           }}
         >
-          <SearchWrapper<Tournament>
-            items={[]} 
-            filterFn={() => true}
-            renderCard={() => null}
+          <SearchWrapper
             placeholder="Search tournaments..."
             query={query}
             setQuery={setQuery}
           />
         </Box>
+      </Box>
 
-        <Box sx={{ order: { xs: 2, sm: 1 } }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="tournament tabs"
-            sx={{
-              "& .MuiTab-root": {
-                fontSize: { xs: "0.7rem", sm: "0.9rem", md: "1rem" },
-                minWidth: { xs: 60, sm: 90, md: 120 },
-                padding: { xs: "6px 8px", sm: "8px 12px" },
-              },
-            }}
-          >
-            <Tab label="All" />
-            <Tab label="Upcoming" />
-            <Tab label="Ongoing" />
-            <Tab label="Completed" />
-          </Tabs>
+      {/* Desktop header: Tabs + Search */}
+      <Box
+        sx={{
+          display: { xs: "none", md: "flex" }, // visible from 768px
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mb: 2,
+        }}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="tournament tabs"
+          sx={{
+            "& .MuiTab-root": {
+              fontSize: { xs: "0.75rem", sm: "0.9rem", md: "1rem" },
+              minWidth: { xs: 70, sm: 90, md: 120 },
+              px: { xs: 1, sm: 2 },
+            },
+          }}
+        >
+          <Tab label="All" />
+          <Tab label="Upcoming" />
+          <Tab label="Ongoing" />
+          <Tab label="Completed" />
+        </Tabs>
+
+        <Box sx={{ width: "350px" }}>
+          <SearchWrapper
+            placeholder="Search tournaments..."
+            query={query}
+            setQuery={setQuery}
+          />
         </Box>
       </Box>
 
-      {/* Cards BELOW */}
+      {/* Cards or Empty State */}
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" },
-          gap: 3,
+          gap: { xs: 2, sm: 3 },
           mt: 2,
-          justifyContent: "start", // ✅ ensures items align left
+          justifyItems: "stretch",
+          alignItems: "start",
         }}
       >
         {filtered.length > 0 ? (
@@ -114,12 +134,16 @@ export default function TabSwitch({ tournaments }: TabSwitchProps) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              py: 4,
+              minHeight: "200px",
+              border: "1px dashed",
+              borderColor: "divider",
+              borderRadius: 2,
+              bgcolor: "background.default",
             }}
           >
             <Typography variant="body1" color="text.secondary">
               {query
-                ? "No tournaments match your search."
+                ? `No tournaments match "${query}".`
                 : `No ${tabLabel.toLowerCase()} tournaments found.`}
             </Typography>
           </Box>

@@ -9,8 +9,9 @@ export default function TournamentsPage() {
   return (
     <div className="bg-gray-50 min-h-screen py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center text-3xl font-bold mb-4 sm:mb-6">Tournaments</h2>
-
+<h2 className="hidden md:block text-center text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-5 md:mb-6">
+  Tournaments
+</h2>
         {hasTournaments ? (
        <SectionWrapper type="card" count={3}>
   <TabSwitch tournaments={tournaments} />
