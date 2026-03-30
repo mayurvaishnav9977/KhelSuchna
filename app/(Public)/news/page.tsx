@@ -1,13 +1,10 @@
-// app/news/page.tsx
 import NewsSearchBar from "@/Components/News/NewsSearchBar";
-import { News } from "@/Modals/allmodals";
 import NotFoundUI from "@/Components/NotFoundUI";
 import { mockNews } from "@/lib/news";
-
+import SectionWrapper from "@/Components/SectionWrapper"
 
 export default async function NewsPage() {
-  const news = mockNews; // or fetch from API here
-
+  const news = mockNews;
   const hasNews = news && news.length > 0;
 
   return (
@@ -16,7 +13,9 @@ export default async function NewsPage() {
         <h2 className="text-center text-3xl font-bold mb-10">News</h2>
 
         {hasNews ? (
-          <NewsSearchBar news={news} />
+          <SectionWrapper type="text" rows={4}>
+            <NewsSearchBar news={news} />
+          </SectionWrapper>
         ) : (
           <NotFoundUI
             title="No News Available"

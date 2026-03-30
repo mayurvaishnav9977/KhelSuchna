@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import TextField from "@/Components/Input/inputbox"; 
+import TextField from "@/Components/TextField/TextField"; 
 import CustomModal from "@/Components/Model/Model"; 
 import Tooltip from "@/Components/Tooltip/Tooltip";
 import Button from "@/Components/Button/button";
