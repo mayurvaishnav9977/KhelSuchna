@@ -26,7 +26,7 @@ export default function DashboardPage() {
           <h2 className="text-left text-xl sm:text-3xl font-bold mb-5">
             Explore Tournaments
           </h2>
-          <SectionWrapper type="card" count={4}>
+          <SectionWrapper type="list" count={4}>
             <AllTournaments tournaments={tournaments} />
           </SectionWrapper>
         </section>

@@ -13,7 +13,7 @@ export default function TournamentsPage() {
   Tournaments
 </h2>
         {hasTournaments ? (
-       <SectionWrapper type="card" count={3}>
+       <SectionWrapper type="card" count={tournaments.length}>
   <TabSwitch tournaments={tournaments} />
 </SectionWrapper>
         ) : (
