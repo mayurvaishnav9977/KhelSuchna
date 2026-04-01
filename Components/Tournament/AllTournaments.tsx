@@ -16,7 +16,7 @@ export default function AllTournaments({ tournaments }: Props) {
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 800);
+    const timer = setTimeout(() => setMounted(true));
     return () => clearTimeout(timer);
   }, []);
 

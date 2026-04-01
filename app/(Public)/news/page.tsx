@@ -13,7 +13,7 @@ export default async function NewsPage() {
         <h2 className="text-center text-3xl font-bold mb-10">News</h2>
 
         {hasNews ? (
-          <SectionWrapper type="text" rows={4}>
+          <SectionWrapper type="card" count={news.length}>
             <NewsSearchBar news={news} />
           </SectionWrapper>
         ) : (
