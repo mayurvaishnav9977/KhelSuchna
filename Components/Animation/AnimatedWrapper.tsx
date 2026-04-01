@@ -8,7 +8,7 @@ type MotionWrapperProps = {
   variant?: "fade" | "slide" | "scale" |"bottom";
 };
 
-export const AnimationWrapper = ({ children, variant = "bottom" }: MotionWrapperProps) => {
+export const AnimationWrapper = ({ children, variant = "botto m" }: MotionWrapperProps) => {
   const variantsMap = {
     fade: fadeIn,
     slide: slideIn,
