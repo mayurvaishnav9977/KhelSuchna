@@ -1,19 +1,19 @@
-// src/components/animation/MotionWrapper.tsx
 "use client";
+
 import { motion } from "framer-motion";
-import { fadeIn, slideIn, scaleUp ,slideFromBottom} from "@/lib/animationVariants";
+import { fadeIn, slideIn, scaleUp, slideFromBottom } from "@/lib/animationVariants";
 
 type MotionWrapperProps = {
   children: React.ReactNode;
-  variant?: "fade" | "slide" | "scale" |"bottom";
+  variant?: "fade" | "slide" | "scale" | "bottom";
 };
 
-export const AnimationWrapper = ({ children, variant = "botto m" }: MotionWrapperProps) => {
-  const variantsMap = {
+export const AnimationWrapper = ({ children, variant = "bottom" }: MotionWrapperProps) => {
+  const variantsMap: Record<NonNullable<MotionWrapperProps["variant"]>, any> = {
     fade: fadeIn,
     slide: slideIn,
     scale: scaleUp,
-        bottom: slideFromBottom,
+    bottom: slideFromBottom,
   };
 
   return (

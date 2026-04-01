@@ -13,7 +13,7 @@ export default function DashboardPage() {
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 space-y-10">
         
         {/* Popular Tournaments Section */}
-        <AnimationWrapper variant="fade">
+        <AnimationWrapper variant="bottom">
           <section>
             <h2 className="text-left text-xl sm:text-3xl font-bold mb-5">
               Popular Tournaments
